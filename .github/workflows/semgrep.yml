@@ -1,0 +1,15 @@
+name: Semgrep
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      - uses: actions/checkout@v4
+      - run: semgrep --metrics=off --config="p/default"
